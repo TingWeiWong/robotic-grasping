@@ -1,16 +1,13 @@
 import torch.nn as nn
 import torch.nn.functional as F
+from inference.models.quantized_grasp_model import GraspModelQuantized, ResidualBlockQuantized
 
-from inference.models.grasp_model import GraspModel, ResidualBlock
 
-
-class GenerativeResnet(GraspModel):
+class GenerativeResnet(GraspModelQuantized):
 
     def __init__(self, input_channels=4, output_channels=1, channel_size=32, dropout=False, prob=0.0):
         super(GenerativeResnet, self).__init__()
-        # Quantization
         self.quant = torch.quantization.QuantStub()
-
         self.conv1 = nn.Conv2d(input_channels, channel_size, kernel_size=9, stride=1, padding=4)
         self.bn1 = nn.BatchNorm2d(channel_size)
 
@@ -20,11 +17,11 @@ class GenerativeResnet(GraspModel):
         self.conv3 = nn.Conv2d(channel_size * 2, channel_size * 4, kernel_size=4, stride=2, padding=1)
         self.bn3 = nn.BatchNorm2d(channel_size * 4)
 
-        self.res1 = ResidualBlock(channel_size * 4, channel_size * 4)
-        self.res2 = ResidualBlock(channel_size * 4, channel_size * 4)
-        self.res3 = ResidualBlock(channel_size * 4, channel_size * 4)
-        self.res4 = ResidualBlock(channel_size * 4, channel_size * 4)
-        self.res5 = ResidualBlock(channel_size * 4, channel_size * 4)
+        self.res1 = ResidualBlockQuantized(channel_size * 4, channel_size * 4)
+        self.res2 = ResidualBlockQuantized(channel_size * 4, channel_size * 4)
+        self.res3 = ResidualBlockQuantized(channel_size * 4, channel_size * 4)
+        self.res4 = ResidualBlockQuantized(channel_size * 4, channel_size * 4)
+        self.res5 = ResidualBlockQuantized(channel_size * 4, channel_size * 4)
 
         self.conv4 = nn.ConvTranspose2d(channel_size * 4, channel_size * 2, kernel_size=4, stride=2, padding=1,
                                         output_padding=1)
@@ -52,9 +49,7 @@ class GenerativeResnet(GraspModel):
                 nn.init.xavier_uniform_(m.weight, gain=1)
 
     def forward(self, x_in):
-        # Quantization
-        x_in = self.quant(x_in)
-        
+    	x_in = self.quant(x_in)
         x = F.relu(self.bn1(self.conv1(x_in)))
         x = F.relu(self.bn2(self.conv2(x)))
         x = F.relu(self.bn3(self.conv3(x)))

@@ -2,7 +2,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
-class GraspModel(nn.Module):
+class GraspModelQuantized(nn.Module):
     """
     An abstract model for grasp network in a common format.
     """
@@ -48,23 +48,20 @@ class GraspModel(nn.Module):
         }
 
 
-class ResidualBlock(nn.Module):
+class ResidualBlockQuantized(nn.Module):
     """
     A residual block with dropout option
     """
 
     def __init__(self, in_channels, out_channels, kernel_size=3):
         super(ResidualBlock, self).__init__()
-        # Quantization
         self.quant = torch.quantization.QuantStub()
-
         self.conv1 = nn.Conv2d(in_channels, out_channels, kernel_size, padding=1)
         self.bn1 = nn.BatchNorm2d(in_channels)
         self.conv2 = nn.Conv2d(in_channels, out_channels, kernel_size, padding=1)
         self.bn2 = nn.BatchNorm2d(in_channels)
 
     def forward(self, x_in):
-        # Quantization
         x_in = self.quant(x_in)
         x = self.bn1(self.conv1(x_in))
         x = F.relu(x)
