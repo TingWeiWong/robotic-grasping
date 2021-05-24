@@ -8,9 +8,7 @@ class GenerativeResnet(GraspModel):
 
     def __init__(self, input_channels=4, output_channels=1, channel_size=32, dropout=False, prob=0.0):
         super(GenerativeResnet, self).__init__()
-        # Quantization
-        self.quant = torch.quantization.QuantStub()
-
+       
         self.conv1 = nn.Conv2d(input_channels, channel_size, kernel_size=9, stride=1, padding=4)
         self.bn1 = nn.BatchNorm2d(channel_size)
 
@@ -52,8 +50,6 @@ class GenerativeResnet(GraspModel):
                 nn.init.xavier_uniform_(m.weight, gain=1)
 
     def forward(self, x_in):
-        # Quantization
-        x_in = self.quant(x_in)
         
         x = F.relu(self.bn1(self.conv1(x_in)))
         x = F.relu(self.bn2(self.conv2(x)))

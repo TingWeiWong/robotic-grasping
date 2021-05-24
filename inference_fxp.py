@@ -15,9 +15,12 @@ conv1_weight = model_dict['bn2.num_batches_tracked']
 # print(conv1_weight)
 
 def param_convert(x, a):
-    y = Fxp(x, signed=True, n_word=a+15, n_frac=a, overflow='saturate', rounding='around')
+    y = Fxp(x, signed=True, n_word=a+2, n_frac=a, overflow='saturate', rounding='around')
     y = y.get_val()
-    y = torch.from_numpy(x)
+    if(a==100):
+        y = torch.from_numpy(x)
+    else:
+        y = torch.from_numpy(y)
     y = y.type(torch.FloatTensor)
     return y
 

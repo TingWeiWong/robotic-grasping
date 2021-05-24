@@ -121,7 +121,7 @@ if __name__ == '__main__':
         print(x_0.size())
         print(x_1.size())
 
-        param_lenth = 8
+        param_lenth = 4
 
         model_dict = net.state_dict()
         conv1_weight = model_dict['conv1.weight'].numpy()
@@ -236,181 +236,181 @@ if __name__ == '__main__':
         width_weight = model_dict['width_output.weight'].numpy()
         width_bias = model_dict['width_output.bias'].numpy()
 
-        for i in range(len(bn1_weight)):
-            bn1_weight[i] = bn1_weight[i]/math.sqrt(bn1_running_var[i] + 0.00001)
-            bn1_bias[i] = bn1_bias[i] - bn1_running_mean[i]/math.sqrt(bn1_running_var[i] + 0.00001)
-            bn1_running_var[i] = 0.99999
-            bn1_running_mean[i] = 0
+        # for i in range(len(bn1_weight)):
+        #     bn1_weight[i] = bn1_weight[i]/math.sqrt(bn1_running_var[i] + 0.00001)
+        #     bn1_bias[i] = bn1_bias[i] - bn1_running_mean[i]/math.sqrt(bn1_running_var[i] + 0.00001)
+        #     bn1_running_var[i] = 0.99999
+        #     bn1_running_mean[i] = 0
 
-        for i in range(len(bn2_weight)):
-            bn2_weight[i] = bn2_weight[i]/math.sqrt(bn2_running_var[i]+0.00001)
-            bn2_bias[i] = bn2_bias[i] - bn2_running_mean[i]/math.sqrt(bn2_running_var[i]+0.00001)
-            bn2_running_var[i] = 0.99999
-            bn2_running_mean[i] = 0
+        # for i in range(len(bn2_weight)):
+        #     bn2_weight[i] = bn2_weight[i]/math.sqrt(bn2_running_var[i]+0.00001)
+        #     bn2_bias[i] = bn2_bias[i] - bn2_running_mean[i]/math.sqrt(bn2_running_var[i]+0.00001)
+        #     bn2_running_var[i] = 0.99999
+        #     bn2_running_mean[i] = 0
 
-        for i in range(len(bn3_weight)):
-            bn3_weight[i] = bn3_weight[i]/math.sqrt(bn3_running_var[i]+0.00001)
-            bn3_bias[i] = bn3_bias[i] - bn3_running_mean[i]/math.sqrt(bn3_running_var[i]+0.00001)
-            bn3_running_var[i] = 0.99999
-            bn3_running_mean[i] = 0
+        # for i in range(len(bn3_weight)):
+        #     bn3_weight[i] = bn3_weight[i]/math.sqrt(bn3_running_var[i]+0.00001)
+        #     bn3_bias[i] = bn3_bias[i] - bn3_running_mean[i]/math.sqrt(bn3_running_var[i]+0.00001)
+        #     bn3_running_var[i] = 0.99999
+        #     bn3_running_mean[i] = 0
 
-        for i in range(len(res1_bn1_weight)):
-            res1_bn1_weight[i] = res1_bn1_weight[i]/math.sqrt(res1_bn1_running_var[i]+0.00001)
-            res1_bn1_bias[i] = res1_bn1_bias[i] - res1_bn1_running_mean[i]/math.sqrt(res1_bn1_running_var[i]+0.00001)
-            res1_bn1_running_var[i] = 0.99999
-            res1_bn1_running_mean[i] = 0
-            res1_bn2_weight[i] = res1_bn2_weight[i]/math.sqrt(res1_bn2_running_var[i]+0.00001)
-            res1_bn2_bias[i] = res1_bn2_bias[i] - res1_bn2_running_mean[i]/math.sqrt(res1_bn2_running_var[i]+0.00001)
-            res1_bn2_running_var[i] = 0.99999
-            res1_bn2_running_mean[i] = 0
+        # for i in range(len(res1_bn1_weight)):
+        #     res1_bn1_weight[i] = res1_bn1_weight[i]/math.sqrt(res1_bn1_running_var[i]+0.00001)
+        #     res1_bn1_bias[i] = res1_bn1_bias[i] - res1_bn1_running_mean[i]/math.sqrt(res1_bn1_running_var[i]+0.00001)
+        #     res1_bn1_running_var[i] = 0.99999
+        #     res1_bn1_running_mean[i] = 0
+        #     res1_bn2_weight[i] = res1_bn2_weight[i]/math.sqrt(res1_bn2_running_var[i]+0.00001)
+        #     res1_bn2_bias[i] = res1_bn2_bias[i] - res1_bn2_running_mean[i]/math.sqrt(res1_bn2_running_var[i]+0.00001)
+        #     res1_bn2_running_var[i] = 0.99999
+        #     res1_bn2_running_mean[i] = 0
             
-            res2_bn1_weight[i] = res2_bn1_weight[i]/math.sqrt(res2_bn1_running_var[i]+0.00001)
-            res2_bn1_bias[i] = res2_bn1_bias[i] - res2_bn1_running_mean[i]/math.sqrt(res2_bn1_running_var[i]+0.00001)
-            res2_bn1_running_var[i] = 0.99999
-            res2_bn1_running_mean[i] = 0
-            res2_bn2_weight[i] = res2_bn2_weight[i]/math.sqrt(res2_bn2_running_var[i]+0.00001)
-            res2_bn2_bias[i] = res2_bn2_bias[i] - res2_bn2_running_mean[i]/math.sqrt(res2_bn2_running_var[i]+0.00001)
-            res2_bn2_running_var[i] = 0.99999
-            res2_bn2_running_mean[i] = 0
+        #     res2_bn1_weight[i] = res2_bn1_weight[i]/math.sqrt(res2_bn1_running_var[i]+0.00001)
+        #     res2_bn1_bias[i] = res2_bn1_bias[i] - res2_bn1_running_mean[i]/math.sqrt(res2_bn1_running_var[i]+0.00001)
+        #     res2_bn1_running_var[i] = 0.99999
+        #     res2_bn1_running_mean[i] = 0
+        #     res2_bn2_weight[i] = res2_bn2_weight[i]/math.sqrt(res2_bn2_running_var[i]+0.00001)
+        #     res2_bn2_bias[i] = res2_bn2_bias[i] - res2_bn2_running_mean[i]/math.sqrt(res2_bn2_running_var[i]+0.00001)
+        #     res2_bn2_running_var[i] = 0.99999
+        #     res2_bn2_running_mean[i] = 0
 
-            res3_bn1_weight[i] = res3_bn1_weight[i]/math.sqrt(res3_bn1_running_var[i]+0.00001)
-            res3_bn1_bias[i] = res3_bn1_bias[i] - res3_bn1_running_mean[i]/math.sqrt(res3_bn1_running_var[i]+0.00001)
-            res3_bn1_running_var[i] = 0.99999
-            res3_bn1_running_mean[i] = 0
-            res3_bn2_weight[i] = res3_bn2_weight[i]/math.sqrt(res3_bn2_running_var[i]+0.00001)
-            res3_bn2_bias[i] = res3_bn2_bias[i] - res3_bn2_running_mean[i]/math.sqrt(res3_bn2_running_var[i]+0.00001)
-            res3_bn2_running_var[i] = 0.99999
-            res3_bn2_running_mean[i] = 0
+        #     res3_bn1_weight[i] = res3_bn1_weight[i]/math.sqrt(res3_bn1_running_var[i]+0.00001)
+        #     res3_bn1_bias[i] = res3_bn1_bias[i] - res3_bn1_running_mean[i]/math.sqrt(res3_bn1_running_var[i]+0.00001)
+        #     res3_bn1_running_var[i] = 0.99999
+        #     res3_bn1_running_mean[i] = 0
+        #     res3_bn2_weight[i] = res3_bn2_weight[i]/math.sqrt(res3_bn2_running_var[i]+0.00001)
+        #     res3_bn2_bias[i] = res3_bn2_bias[i] - res3_bn2_running_mean[i]/math.sqrt(res3_bn2_running_var[i]+0.00001)
+        #     res3_bn2_running_var[i] = 0.99999
+        #     res3_bn2_running_mean[i] = 0
 
-            res4_bn1_weight[i] = res4_bn1_weight[i]/math.sqrt(res4_bn1_running_var[i]+0.00001)
-            res4_bn1_bias[i] = res4_bn1_bias[i] - res4_bn1_running_mean[i]/math.sqrt(res4_bn1_running_var[i]+0.00001)
-            res4_bn1_running_var[i] = 0.99999
-            res4_bn1_running_mean[i] = 0
-            res4_bn2_weight[i] = res4_bn2_weight[i]/math.sqrt(res4_bn2_running_var[i]+0.00001)
-            res4_bn2_bias[i] = res4_bn2_bias[i] - res4_bn2_running_mean[i]/math.sqrt(res4_bn2_running_var[i]+0.00001)
-            res4_bn2_running_var[i] = 0.99999
-            res4_bn2_running_mean[i] = 0
+        #     res4_bn1_weight[i] = res4_bn1_weight[i]/math.sqrt(res4_bn1_running_var[i]+0.00001)
+        #     res4_bn1_bias[i] = res4_bn1_bias[i] - res4_bn1_running_mean[i]/math.sqrt(res4_bn1_running_var[i]+0.00001)
+        #     res4_bn1_running_var[i] = 0.99999
+        #     res4_bn1_running_mean[i] = 0
+        #     res4_bn2_weight[i] = res4_bn2_weight[i]/math.sqrt(res4_bn2_running_var[i]+0.00001)
+        #     res4_bn2_bias[i] = res4_bn2_bias[i] - res4_bn2_running_mean[i]/math.sqrt(res4_bn2_running_var[i]+0.00001)
+        #     res4_bn2_running_var[i] = 0.99999
+        #     res4_bn2_running_mean[i] = 0
 
-            res5_bn1_weight[i] = res5_bn1_weight[i]/math.sqrt(res5_bn1_running_var[i]+0.00001)
-            res5_bn1_bias[i] = res5_bn1_bias[i] - res5_bn1_running_mean[i]/math.sqrt(res5_bn1_running_var[i]+0.00001)
-            res5_bn1_running_var[i] = 0.99999
-            res5_bn1_running_mean[i] = 0
-            res5_bn2_weight[i] = res5_bn2_weight[i]/math.sqrt(res5_bn2_running_var[i]+0.00001)
-            res5_bn2_bias[i] = res5_bn2_bias[i] - res5_bn2_running_mean[i]/math.sqrt(res5_bn2_running_var[i]+0.00001)
-            res5_bn2_running_var[i] = 0.99999
-            res5_bn2_running_mean[i] = 0
+        #     res5_bn1_weight[i] = res5_bn1_weight[i]/math.sqrt(res5_bn1_running_var[i]+0.00001)
+        #     res5_bn1_bias[i] = res5_bn1_bias[i] - res5_bn1_running_mean[i]/math.sqrt(res5_bn1_running_var[i]+0.00001)
+        #     res5_bn1_running_var[i] = 0.99999
+        #     res5_bn1_running_mean[i] = 0
+        #     res5_bn2_weight[i] = res5_bn2_weight[i]/math.sqrt(res5_bn2_running_var[i]+0.00001)
+        #     res5_bn2_bias[i] = res5_bn2_bias[i] - res5_bn2_running_mean[i]/math.sqrt(res5_bn2_running_var[i]+0.00001)
+        #     res5_bn2_running_var[i] = 0.99999
+        #     res5_bn2_running_mean[i] = 0
 
-        for i in range(len(bn4_weight)):
-            bn4_weight[i] = bn4_weight[i]/math.sqrt(bn4_running_var[i]+0.00001)
-            bn4_bias[i] = bn4_bias[i] - bn4_running_mean[i]/math.sqrt(bn4_running_var[i]+0.00001)
-            bn4_running_var[i] = 0.99999
-            bn4_running_mean[i] = 0
+        # for i in range(len(bn4_weight)):
+        #     bn4_weight[i] = bn4_weight[i]/math.sqrt(bn4_running_var[i]+0.00001)
+        #     bn4_bias[i] = bn4_bias[i] - bn4_running_mean[i]/math.sqrt(bn4_running_var[i]+0.00001)
+        #     bn4_running_var[i] = 0.99999
+        #     bn4_running_mean[i] = 0
 
-        for i in range(len(bn5_weight)):
-            bn5_weight[i] = bn5_weight[i]/math.sqrt(bn5_running_var[i]+0.00001)
-            bn5_bias[i] = bn5_bias[i] - bn5_running_mean[i]/math.sqrt(bn5_running_var[i]+0.00001)
-            bn5_running_var[i] = 0.99999
-            bn5_running_mean[i] = 0
+        # for i in range(len(bn5_weight)):
+        #     bn5_weight[i] = bn5_weight[i]/math.sqrt(bn5_running_var[i]+0.00001)
+        #     bn5_bias[i] = bn5_bias[i] - bn5_running_mean[i]/math.sqrt(bn5_running_var[i]+0.00001)
+        #     bn5_running_var[i] = 0.99999
+        #     bn5_running_mean[i] = 0
 
         conv1_weight = param_convert(conv1_weight,param_lenth)
         conv1_bias = param_convert(conv1_bias,param_lenth)
-        bn1_weight = param_convert(bn1_weight,param_lenth)
-        bn1_bias = param_convert(bn1_bias,param_lenth)
-        bn1_running_mean = param_convert(bn1_running_mean,param_lenth)
-        bn1_running_var = param_convert(bn1_running_var,param_lenth)
+        bn1_weight = param_convert(bn1_weight,100)
+        bn1_bias = param_convert(bn1_bias,100)
+        bn1_running_mean = param_convert(bn1_running_mean,100)
+        bn1_running_var = param_convert(bn1_running_var,100)
 
         conv2_weight = param_convert(conv2_weight,param_lenth)
         conv2_bias = param_convert(conv2_bias,param_lenth)
-        bn2_weight = param_convert(bn2_weight,param_lenth)
-        bn2_bias = param_convert(bn2_bias,param_lenth)
-        bn2_running_mean = param_convert(bn2_running_mean,param_lenth)
-        bn2_running_var = param_convert(bn2_running_var,param_lenth)
+        bn2_weight = param_convert(bn2_weight,100)
+        bn2_bias = param_convert(bn2_bias,100)
+        bn2_running_mean = param_convert(bn2_running_mean,100)
+        bn2_running_var = param_convert(bn2_running_var,100)
 
         conv3_weight = param_convert(conv3_weight,param_lenth)
         conv3_bias = param_convert(conv3_bias,param_lenth)
-        bn3_weight = param_convert(bn3_weight,param_lenth)
-        bn3_bias = param_convert(bn3_bias,param_lenth)
-        bn3_running_mean = param_convert(bn3_running_mean,param_lenth)
-        bn3_running_var = param_convert(bn3_running_var,param_lenth)
+        bn3_weight = param_convert(bn3_weight,100)
+        bn3_bias = param_convert(bn3_bias,100)
+        bn3_running_mean = param_convert(bn3_running_mean,100)
+        bn3_running_var = param_convert(bn3_running_var,100)
 
         res1_conv1_weight = param_convert(res1_conv1_weight,param_lenth)
         res1_conv1_bias = param_convert(res1_conv1_bias,param_lenth)
-        res1_bn1_weight = param_convert(res1_bn1_weight,param_lenth)
-        res1_bn1_bias = param_convert(res1_bn1_bias,param_lenth)
-        res1_bn1_running_mean = param_convert(res1_bn1_running_mean,param_lenth)
-        res1_bn1_running_var = param_convert(res1_bn1_running_var,param_lenth)
+        res1_bn1_weight = param_convert(res1_bn1_weight,100)
+        res1_bn1_bias = param_convert(res1_bn1_bias,100)
+        res1_bn1_running_mean = param_convert(res1_bn1_running_mean,100)
+        res1_bn1_running_var = param_convert(res1_bn1_running_var,100)
         res1_conv2_weight = param_convert(res1_conv2_weight,param_lenth)
         res1_conv2_bias = param_convert(res1_conv2_bias,param_lenth)
-        res1_bn2_weight = param_convert(res1_bn2_weight,param_lenth)
-        res1_bn2_bias = param_convert(res1_bn2_bias,param_lenth)
-        res1_bn2_running_mean = param_convert(res1_bn2_running_mean,param_lenth)
-        res1_bn2_running_var = param_convert(res1_bn2_running_var,param_lenth)
+        res1_bn2_weight = param_convert(res1_bn2_weight,100)
+        res1_bn2_bias = param_convert(res1_bn2_bias,100)
+        res1_bn2_running_mean = param_convert(res1_bn2_running_mean,100)
+        res1_bn2_running_var = param_convert(res1_bn2_running_var,100)
 
         res2_conv1_weight =     param_convert(res2_conv1_weight,param_lenth)
         res2_conv1_bias =       param_convert(res2_conv1_bias,param_lenth)
-        res2_bn1_weight =       param_convert(res2_bn1_weight,param_lenth)
-        res2_bn1_bias =         param_convert(res2_bn1_bias,param_lenth)
-        res2_bn1_running_mean = param_convert(res2_bn1_running_mean,param_lenth)
-        res2_bn1_running_var =  param_convert(res2_bn1_running_var,param_lenth)
+        res2_bn1_weight =       param_convert(res2_bn1_weight,100)
+        res2_bn1_bias =         param_convert(res2_bn1_bias,100)
+        res2_bn1_running_mean = param_convert(res2_bn1_running_mean,100)
+        res2_bn1_running_var =  param_convert(res2_bn1_running_var,100)
         res2_conv2_weight =     param_convert(res2_conv2_weight,param_lenth)
         res2_conv2_bias =       param_convert(res2_conv2_bias,param_lenth)
-        res2_bn2_weight =       param_convert(res2_bn2_weight,param_lenth)
-        res2_bn2_bias =         param_convert(res2_bn2_bias,param_lenth)
-        res2_bn2_running_mean = param_convert(res2_bn2_running_mean,param_lenth)
-        res2_bn2_running_var =  param_convert(res2_bn2_running_var,param_lenth)
+        res2_bn2_weight =       param_convert(res2_bn2_weight,100)
+        res2_bn2_bias =         param_convert(res2_bn2_bias,100)
+        res2_bn2_running_mean = param_convert(res2_bn2_running_mean,100)
+        res2_bn2_running_var =  param_convert(res2_bn2_running_var,100)
 
         res3_conv1_weight =     param_convert(res3_conv1_weight,param_lenth)
         res3_conv1_bias =       param_convert(res3_conv1_bias,param_lenth)
-        res3_bn1_weight =       param_convert(res3_bn1_weight,param_lenth)
-        res3_bn1_bias =         param_convert(res3_bn1_bias,param_lenth)
-        res3_bn1_running_mean = param_convert(res3_bn1_running_mean,param_lenth)
-        res3_bn1_running_var =  param_convert(res3_bn1_running_var,param_lenth)
+        res3_bn1_weight =       param_convert(res3_bn1_weight,100)
+        res3_bn1_bias =         param_convert(res3_bn1_bias,100)
+        res3_bn1_running_mean = param_convert(res3_bn1_running_mean,100)
+        res3_bn1_running_var =  param_convert(res3_bn1_running_var,100)
         res3_conv2_weight =     param_convert(res3_conv2_weight,param_lenth)
         res3_conv2_bias =       param_convert(res3_conv2_bias,param_lenth)
-        res3_bn2_weight =       param_convert(res3_bn2_weight,param_lenth)
-        res3_bn2_bias =         param_convert(res3_bn2_bias,param_lenth)
-        res3_bn2_running_mean = param_convert(res3_bn2_running_mean,param_lenth)
-        res3_bn2_running_var =  param_convert(res3_bn2_running_var,param_lenth)
+        res3_bn2_weight =       param_convert(res3_bn2_weight,100)
+        res3_bn2_bias =         param_convert(res3_bn2_bias,100)
+        res3_bn2_running_mean = param_convert(res3_bn2_running_mean,100)
+        res3_bn2_running_var =  param_convert(res3_bn2_running_var,100)
 
         res4_conv1_weight =     param_convert(res4_conv1_weight,param_lenth)
         res4_conv1_bias =       param_convert(res4_conv1_bias,param_lenth)
-        res4_bn1_weight =       param_convert(res4_bn1_weight,param_lenth)
-        res4_bn1_bias =         param_convert(res4_bn1_bias,param_lenth)
-        res4_bn1_running_mean = param_convert(res4_bn1_running_mean,param_lenth)
-        res4_bn1_running_var =  param_convert(res4_bn1_running_var,param_lenth)
+        res4_bn1_weight =       param_convert(res4_bn1_weight,100)
+        res4_bn1_bias =         param_convert(res4_bn1_bias,100)
+        res4_bn1_running_mean = param_convert(res4_bn1_running_mean,100)
+        res4_bn1_running_var =  param_convert(res4_bn1_running_var,100)
         res4_conv2_weight =     param_convert(res4_conv2_weight,param_lenth)
         res4_conv2_bias =       param_convert(res4_conv2_bias,param_lenth)
-        res4_bn2_weight =       param_convert(res4_bn2_weight,param_lenth)
-        res4_bn2_bias =         param_convert(res4_bn2_bias,param_lenth)
-        res4_bn2_running_mean = param_convert(res4_bn2_running_mean,param_lenth)
-        res4_bn2_running_var =  param_convert(res4_bn2_running_var,param_lenth)
+        res4_bn2_weight =       param_convert(res4_bn2_weight,100)
+        res4_bn2_bias =         param_convert(res4_bn2_bias,100)
+        res4_bn2_running_mean = param_convert(res4_bn2_running_mean,100)
+        res4_bn2_running_var =  param_convert(res4_bn2_running_var,100)
 
         res5_conv1_weight =     param_convert(res5_conv1_weight,param_lenth)
         res5_conv1_bias =       param_convert(res5_conv1_bias,param_lenth)
-        res5_bn1_weight =       param_convert(res5_bn1_weight,param_lenth)
-        res5_bn1_bias =         param_convert(res5_bn1_bias,param_lenth)
-        res5_bn1_running_mean = param_convert(res5_bn1_running_mean,param_lenth)
-        res5_bn1_running_var =  param_convert(res5_bn1_running_var,param_lenth)
+        res5_bn1_weight =       param_convert(res5_bn1_weight,100)
+        res5_bn1_bias =         param_convert(res5_bn1_bias,100)
+        res5_bn1_running_mean = param_convert(res5_bn1_running_mean,100)
+        res5_bn1_running_var =  param_convert(res5_bn1_running_var,100)
         res5_conv2_weight =     param_convert(res5_conv2_weight,param_lenth)
         res5_conv2_bias =       param_convert(res5_conv2_bias,param_lenth)
-        res5_bn2_weight =       param_convert(res5_bn2_weight,param_lenth)
-        res5_bn2_bias =         param_convert(res5_bn2_bias,param_lenth)
-        res5_bn2_running_mean = param_convert(res5_bn2_running_mean,param_lenth)
-        res5_bn2_running_var =  param_convert(res5_bn2_running_var,param_lenth)
+        res5_bn2_weight =       param_convert(res5_bn2_weight,100)
+        res5_bn2_bias =         param_convert(res5_bn2_bias,100)
+        res5_bn2_running_mean = param_convert(res5_bn2_running_mean,100)
+        res5_bn2_running_var =  param_convert(res5_bn2_running_var,100)
 
         conv4_weight = param_convert(conv4_weight,param_lenth)
         conv4_bias = param_convert(conv4_bias,param_lenth)
-        bn4_weight = param_convert(bn4_weight,param_lenth)
-        bn4_bias = param_convert(bn4_bias,param_lenth)
-        bn4_running_mean = param_convert(bn4_running_mean,param_lenth)
-        bn4_running_var = param_convert(bn4_running_var,param_lenth)
+        bn4_weight = param_convert(bn4_weight,100)
+        bn4_bias = param_convert(bn4_bias,100)
+        bn4_running_mean = param_convert(bn4_running_mean,100)
+        bn4_running_var = param_convert(bn4_running_var,100)
 
         conv5_weight = param_convert(conv5_weight,param_lenth)
         conv5_bias = param_convert(conv5_bias,param_lenth)
-        bn5_weight = param_convert(bn5_weight,param_lenth)
-        bn5_bias = param_convert(bn5_bias,param_lenth)
-        bn5_running_mean = param_convert(bn5_running_mean,param_lenth)
-        bn5_running_var = param_convert(bn5_running_var,param_lenth)
+        bn5_weight = param_convert(bn5_weight,100)
+        bn5_bias = param_convert(bn5_bias,100)
+        bn5_running_mean = param_convert(bn5_running_mean,100)
+        bn5_running_var = param_convert(bn5_running_var,100)
 
         conv6_weight = param_convert(conv6_weight,param_lenth)
         conv6_bias = param_convert(conv6_bias,param_lenth)
