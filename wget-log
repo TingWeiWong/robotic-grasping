@@ -1,0 +1,6 @@
+--2021-05-06 00:55:22--  https://storage.googleapis.com/kaggle-data-sets/933946/1579332/bundle/archive.zip?X-Goog-Algorithm=GOOG4-RSA-SHA256
+Resolving storage.googleapis.com (storage.googleapis.com)... 216.58.200.240, 172.217.27.144, 172.217.24.16, ...
+Connecting to storage.googleapis.com (storage.googleapis.com)|216.58.200.240|:443... connected.
+HTTP request sent, awaiting response... 403 Forbidden
+2021-05-06 00:55:23 ERROR 403: Forbidden.
+

@@ -108,4 +108,6 @@ results/
 
 saved_data/
 
+cornell*
+
 *.pyc
