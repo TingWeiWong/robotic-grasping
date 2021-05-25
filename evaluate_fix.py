@@ -20,6 +20,18 @@ from inference_fxp import param_convert, loss
 
 logging.basicConfig(level=logging.INFO)
 
+def get_max_value(test_data):
+	"""
+	This function returns the greatest value inside the test_data
+	"""
+	greatest_value = -1
+
+	for idx, (x, y, didx, rot, zoom) in enumerate(test_data):
+		local_value = torch.max(x)
+		if local_value > greatest_value:
+			greatest_value = local_value
+	return greatest_value
+
 
 def parse_args():
 	parser = argparse.ArgumentParser(description='Evaluate networks')
@@ -123,7 +135,8 @@ if __name__ == '__main__':
 	logging.info('Done')
 	print("type of test_dataset = ",type(test_data))
 	print("type of test_data = ",test_labels[0].size())
-
+	greatest_value = get_max_value(test_data)
+	print ("greatest_value = ",greatest_value)
 	for network in args.network:
 		logging.info('\nEvaluating model {}'.format(network))
 
