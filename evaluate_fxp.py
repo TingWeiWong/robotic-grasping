@@ -80,7 +80,19 @@ if __name__ == '__main__':
 	args = parse_args()
 
 	# Get the compute device
-	device = get_device(args.force_cpu)
+	# device = get_device(args.force_cpu)
+	device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+	print('Using device:', device)
+	print()
+
+	#Additional Info when using cuda
+	if device.type == 'cuda':
+		print(torch.cuda.get_device_name(0))
+		print('Memory Usage:')
+		print('Allocated:', round(torch.cuda.memory_allocated(0)/1024**3,1), 'GB')
+		print('Cached:   ', round(torch.cuda.memory_reserved(0)/1024**3,1), 'GB')
+
+
 
 	# Load Dataset
 	logging.info('Loading {} Dataset...'.format(args.dataset.title()))
