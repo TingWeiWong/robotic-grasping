@@ -121,15 +121,17 @@ if __name__ == '__main__':
         print(x_0.size())
         print(x_1.size())
 
-        param_lenth = 8
-        bias_length = 8
+        param_lenth = 100
+        bias_length = 100
         bn_length = 100
         x_integer = 0
-        x_decimal = 6
+        x_decimal = 100
         conv_integer = 7
-        conv_decimal = 8
-        bn_integer = 5
-        bn_decimal = 7
+        conv_decimal = 100
+        bn_integer = 4
+        bn_decimal = 100
+        out_integer = 1
+        out_decimal = 100
 
 
 
@@ -246,87 +248,97 @@ if __name__ == '__main__':
         width_weight = model_dict['width_output.weight'].numpy()
         width_bias = model_dict['width_output.bias'].numpy()
 
-        # for i in range(len(bn1_weight)):
-        #     bn1_weight[i] = bn1_weight[i]/math.sqrt(bn1_running_var[i] + 0.00001)
-        #     bn1_bias[i] = bn1_bias[i] - bn1_running_mean[i]/math.sqrt(bn1_running_var[i] + 0.00001)
-        #     bn1_running_var[i] = 0.99999
-        #     bn1_running_mean[i] = 0
+        for i in range(len(bn1_weight)):
+            bn1_bias[i] = bn1_bias[i] - bn1_running_mean[i]*bn1_weight[i]/math.sqrt(bn1_running_var[i] + 0.00001)
+            bn1_weight[i] = bn1_weight[i]/math.sqrt(bn1_running_var[i] + 0.00001)
+            bn1_running_var[i] = 0.99999
+            bn1_running_mean[i] = 0
 
-        # for i in range(len(bn2_weight)):
-        #     bn2_weight[i] = bn2_weight[i]/math.sqrt(bn2_running_var[i]+0.00001)
-        #     bn2_bias[i] = bn2_bias[i] - bn2_running_mean[i]/math.sqrt(bn2_running_var[i]+0.00001)
-        #     bn2_running_var[i] = 0.99999
-        #     bn2_running_mean[i] = 0
+        for i in range(len(bn2_weight)):
+            bn2_bias[i] = bn2_bias[i] - bn2_running_mean[i]*bn2_weight[i]/math.sqrt(bn2_running_var[i]+0.00001)
+            bn2_weight[i] = bn2_weight[i]/math.sqrt(bn2_running_var[i]+0.00001)
+            bn2_running_var[i] = 0.99999
+            bn2_running_mean[i] = 0
 
-        # for i in range(len(bn3_weight)):
-        #     bn3_weight[i] = bn3_weight[i]/math.sqrt(bn3_running_var[i]+0.00001)
-        #     bn3_bias[i] = bn3_bias[i] - bn3_running_mean[i]/math.sqrt(bn3_running_var[i]+0.00001)
-        #     bn3_running_var[i] = 0.99999
-        #     bn3_running_mean[i] = 0
+        for i in range(len(bn3_weight)):
+            bn3_bias[i] = bn3_bias[i] - bn3_running_mean[i]*bn3_weight[i]/math.sqrt(bn3_running_var[i]+0.00001)
+            bn3_weight[i] = bn3_weight[i]/math.sqrt(bn3_running_var[i]+0.00001)
+            bn3_running_var[i] = 0.99999
+            bn3_running_mean[i] = 0
 
-        # for i in range(len(res1_bn1_weight)):
-        #     res1_bn1_weight[i] = res1_bn1_weight[i]/math.sqrt(res1_bn1_running_var[i]+0.00001)
-        #     res1_bn1_bias[i] = res1_bn1_bias[i] - res1_bn1_running_mean[i]/math.sqrt(res1_bn1_running_var[i]+0.00001)
-        #     res1_bn1_running_var[i] = 0.99999
-        #     res1_bn1_running_mean[i] = 0
-        #     res1_bn2_weight[i] = res1_bn2_weight[i]/math.sqrt(res1_bn2_running_var[i]+0.00001)
-        #     res1_bn2_bias[i] = res1_bn2_bias[i] - res1_bn2_running_mean[i]/math.sqrt(res1_bn2_running_var[i]+0.00001)
-        #     res1_bn2_running_var[i] = 0.99999
-        #     res1_bn2_running_mean[i] = 0
-            
-        #     res2_bn1_weight[i] = res2_bn1_weight[i]/math.sqrt(res2_bn1_running_var[i]+0.00001)
-        #     res2_bn1_bias[i] = res2_bn1_bias[i] - res2_bn1_running_mean[i]/math.sqrt(res2_bn1_running_var[i]+0.00001)
-        #     res2_bn1_running_var[i] = 0.99999
-        #     res2_bn1_running_mean[i] = 0
-        #     res2_bn2_weight[i] = res2_bn2_weight[i]/math.sqrt(res2_bn2_running_var[i]+0.00001)
-        #     res2_bn2_bias[i] = res2_bn2_bias[i] - res2_bn2_running_mean[i]/math.sqrt(res2_bn2_running_var[i]+0.00001)
-        #     res2_bn2_running_var[i] = 0.99999
-        #     res2_bn2_running_mean[i] = 0
+        for i in range(len(res1_bn1_weight)):
+            res1_bn1_bias[i] = res1_bn1_bias[i] - res1_bn1_running_mean[i]*res1_bn1_weight[i]/math.sqrt(res1_bn1_running_var[i]+0.00001)
+            res1_bn1_weight[i] = res1_bn1_weight[i]/math.sqrt(res1_bn1_running_var[i]+0.00001)
+            res1_bn1_running_var[i] = 0.99999
+            res1_bn1_running_mean[i] = 0
+            res1_bn2_bias[i] = res1_bn2_bias[i] - res1_bn2_running_mean[i]*res1_bn2_weight[i]/math.sqrt(res1_bn2_running_var[i]+0.00001)
+            res1_bn2_weight[i] = res1_bn2_weight[i]/math.sqrt(res1_bn2_running_var[i]+0.00001)
+            res1_bn2_running_var[i] = 0.99999
+            res1_bn2_running_mean[i] = 0
 
-        #     res3_bn1_weight[i] = res3_bn1_weight[i]/math.sqrt(res3_bn1_running_var[i]+0.00001)
-        #     res3_bn1_bias[i] = res3_bn1_bias[i] - res3_bn1_running_mean[i]/math.sqrt(res3_bn1_running_var[i]+0.00001)
-        #     res3_bn1_running_var[i] = 0.99999
-        #     res3_bn1_running_mean[i] = 0
-        #     res3_bn2_weight[i] = res3_bn2_weight[i]/math.sqrt(res3_bn2_running_var[i]+0.00001)
-        #     res3_bn2_bias[i] = res3_bn2_bias[i] - res3_bn2_running_mean[i]/math.sqrt(res3_bn2_running_var[i]+0.00001)
-        #     res3_bn2_running_var[i] = 0.99999
-        #     res3_bn2_running_mean[i] = 0
+            res2_bn1_bias[i] = res2_bn1_bias[i] - res2_bn1_running_mean[i]*res2_bn1_weight[i]/math.sqrt(res2_bn1_running_var[i]+0.00001)
+            res2_bn1_weight[i] = res2_bn1_weight[i]/math.sqrt(res2_bn1_running_var[i]+0.00001)
+            res2_bn1_running_var[i] = 0.99999
+            res2_bn1_running_mean[i] = 0
+            res2_bn2_bias[i] = res2_bn2_bias[i] - res2_bn2_running_mean[i]*res2_bn2_weight[i]/math.sqrt(res2_bn2_running_var[i]+0.00001)
+            res2_bn2_weight[i] = res2_bn2_weight[i]/math.sqrt(res2_bn2_running_var[i]+0.00001)
+            res2_bn2_running_var[i] = 0.99999
+            res2_bn2_running_mean[i] = 0
 
-        #     res4_bn1_weight[i] = res4_bn1_weight[i]/math.sqrt(res4_bn1_running_var[i]+0.00001)
-        #     res4_bn1_bias[i] = res4_bn1_bias[i] - res4_bn1_running_mean[i]/math.sqrt(res4_bn1_running_var[i]+0.00001)
-        #     res4_bn1_running_var[i] = 0.99999
-        #     res4_bn1_running_mean[i] = 0
-        #     res4_bn2_weight[i] = res4_bn2_weight[i]/math.sqrt(res4_bn2_running_var[i]+0.00001)
-        #     res4_bn2_bias[i] = res4_bn2_bias[i] - res4_bn2_running_mean[i]/math.sqrt(res4_bn2_running_var[i]+0.00001)
-        #     res4_bn2_running_var[i] = 0.99999
-        #     res4_bn2_running_mean[i] = 0
+            res3_bn1_bias[i] = res3_bn1_bias[i] - res3_bn1_running_mean[i]*res3_bn1_weight[i]/math.sqrt(res3_bn1_running_var[i]+0.00001)
+            res3_bn1_weight[i] = res3_bn1_weight[i]/math.sqrt(res3_bn1_running_var[i]+0.00001)
+            res3_bn1_running_var[i] = 0.99999
+            res3_bn1_running_mean[i] = 0
+            res3_bn2_bias[i] = res3_bn2_bias[i] - res3_bn2_running_mean[i]*res3_bn2_weight[i]/math.sqrt(res3_bn2_running_var[i]+0.00001)
+            res3_bn2_weight[i] = res3_bn2_weight[i]/math.sqrt(res3_bn2_running_var[i]+0.00001)
+            res3_bn2_running_var[i] = 0.99999
+            res3_bn2_running_mean[i] = 0
 
-        #     res5_bn1_weight[i] = res5_bn1_weight[i]/math.sqrt(res5_bn1_running_var[i]+0.00001)
-        #     res5_bn1_bias[i] = res5_bn1_bias[i] - res5_bn1_running_mean[i]/math.sqrt(res5_bn1_running_var[i]+0.00001)
-        #     res5_bn1_running_var[i] = 0.99999
-        #     res5_bn1_running_mean[i] = 0
-        #     res5_bn2_weight[i] = res5_bn2_weight[i]/math.sqrt(res5_bn2_running_var[i]+0.00001)
-        #     res5_bn2_bias[i] = res5_bn2_bias[i] - res5_bn2_running_mean[i]/math.sqrt(res5_bn2_running_var[i]+0.00001)
-        #     res5_bn2_running_var[i] = 0.99999
-        #     res5_bn2_running_mean[i] = 0
+            res4_bn1_bias[i] = res4_bn1_bias[i] - res4_bn1_running_mean[i]*res4_bn1_weight[i]/math.sqrt(res4_bn1_running_var[i]+0.00001)
+            res4_bn1_weight[i] = res4_bn1_weight[i]/math.sqrt(res4_bn1_running_var[i]+0.00001)
+            res4_bn1_running_var[i] = 0.99999
+            res4_bn1_running_mean[i] = 0
+            res4_bn2_bias[i] = res4_bn2_bias[i] - res4_bn2_running_mean[i]*res4_bn2_weight[i]/math.sqrt(res4_bn2_running_var[i]+0.00001)
+            res4_bn2_weight[i] = res4_bn2_weight[i]/math.sqrt(res4_bn2_running_var[i]+0.00001)
+            res4_bn2_running_var[i] = 0.99999
+            res4_bn2_running_mean[i] = 0
 
-        # for i in range(len(bn4_weight)):
-        #     bn4_weight[i] = bn4_weight[i]/math.sqrt(bn4_running_var[i]+0.00001)
-        #     bn4_bias[i] = bn4_bias[i] - bn4_running_mean[i]/math.sqrt(bn4_running_var[i]+0.00001)
-        #     bn4_running_var[i] = 0.99999
-        #     bn4_running_mean[i] = 0
+            res5_bn1_bias[i] = res5_bn1_bias[i] - res5_bn1_running_mean[i]*res5_bn1_weight[i]/math.sqrt(res5_bn1_running_var[i]+0.00001)
+            res5_bn1_weight[i] = res5_bn1_weight[i]/math.sqrt(res5_bn1_running_var[i]+0.00001)
+            res5_bn1_running_var[i] = 0.99999
+            res5_bn1_running_mean[i] = 0
+            res5_bn2_bias[i] = res5_bn2_bias[i] - res5_bn2_running_mean[i]*res5_bn2_weight[i]/math.sqrt(res5_bn2_running_var[i]+0.00001)
+            res5_bn2_weight[i] = res5_bn2_weight[i]/math.sqrt(res5_bn2_running_var[i]+0.00001)
+            res5_bn2_running_var[i] = 0.99999
+            res5_bn2_running_mean[i] = 0
 
-        # for i in range(len(bn5_weight)):
-        #     bn5_weight[i] = bn5_weight[i]/math.sqrt(bn5_running_var[i]+0.00001)
-        #     bn5_bias[i] = bn5_bias[i] - bn5_running_mean[i]/math.sqrt(bn5_running_var[i]+0.00001)
-        #     bn5_running_var[i] = 0.99999
-        #     bn5_running_mean[i] = 0
+        for i in range(len(bn4_weight)):
+            bn4_bias[i] = bn4_bias[i] - bn4_running_mean[i]*bn4_weight[i]/math.sqrt(bn4_running_var[i]+0.00001)
+            bn4_weight[i] = bn4_weight[i]/math.sqrt(bn4_running_var[i]+0.00001)
+            bn4_running_var[i] = 0.99999
+            bn4_running_mean[i] = 0
 
-        # print("bn1_weight = ",bn1_weight)
-        # print("bn1_bias = ",bn1_bias)
+        for i in range(len(bn5_weight)):
+            bn5_bias[i] = bn5_bias[i] - bn5_running_mean[i]*bn5_weight[i]/math.sqrt(bn5_running_var[i]+0.00001)
+            bn5_weight[i] = bn5_weight[i]/math.sqrt(bn5_running_var[i]+0.00001)
+            bn5_running_var[i] = 0.99999
+            bn5_running_mean[i] = 0
+
+        for i in range(len(conv1_weight)):
+            conv1_bias[i] = conv1_bias[i]+bn1_bias[i]
+            for j in range(len(conv1_weight[0])):
+                for k in range(len(conv1_weight[0][0])):
+                    for z in range(len(conv1_weight[0][0][0])):
+                        conv1_weight[i][j][k][z] = conv1_weight[i][j][k][z]*bn1_weight[i]
+                    
+
+        print("bn1_weight = ",bn1_weight)
+        print("bn1_bias = ",bn1_bias)
 
         conv1_weight = param_convert(conv1_weight,param_lenth)
         conv1_bias = param_convert(conv1_bias,bias_length)
+        print(conv1_weight.size())
+        print(conv1_bias.size())
         bn1_weight = param_convert(bn1_weight,bn_length)
         bn1_bias = param_convert(bn1_bias,bn_length)
         bn1_running_mean = param_convert(bn1_running_mean,100)
@@ -454,16 +466,16 @@ if __name__ == '__main__':
             # x = torch.from_numpy(x) 
             x = param_convert(x, x_decimal)
             conv1_out = F.conv2d(x,conv1_weight,bias=conv1_bias,padding=4)
-            # conv1_out = feature_convert(conv1_out, conv_integer, conv_decimal)
-            bn1_out = F.batch_norm(conv1_out, bn1_running_mean, bn1_running_var, weight=bn1_weight, bias=bn1_bias)
+            conv1_out = feature_convert(conv1_out, conv_integer, conv_decimal)
+            # bn1_out = F.batch_norm(conv1_out, bn1_running_mean, bn1_running_var, weight=bn1_weight, bias=bn1_bias)
             
-            relu_1 = F.relu(bn1_out)
+            relu_1 = F.relu(conv1_out)
             relu_1 = feature_convert(relu_1, bn_integer, bn_decimal)
 
             # max_bn = calculate_max(relu_1,max_bn)
 
             conv2_out = F.conv2d(relu_1,conv2_weight,bias=conv2_bias,padding=1,stride=2)
-            # conv2_out = feature_convert(conv2_out, conv_integer, conv_decimal)
+            conv2_out = feature_convert(conv2_out, conv_integer, conv_decimal)
             bn2_out = F.batch_norm(conv2_out, bn2_running_mean, bn2_running_var, weight=bn2_weight, bias=bn2_bias)
             relu_2 = F.relu(bn2_out)
             relu_2 = feature_convert(relu_2, bn_integer, bn_decimal)
@@ -471,7 +483,7 @@ if __name__ == '__main__':
             # max_bn = calculate_max(relu_2,max_bn)
 
             conv3_out = F.conv2d(relu_2,conv3_weight,bias=conv3_bias,padding=1,stride=2)
-            # conv3_out = feature_convert(conv3_out, conv_integer, conv_decimal)
+            conv3_out = feature_convert(conv3_out, conv_integer, conv_decimal)
             bn3_out = F.batch_norm(conv3_out, bn3_running_mean, bn3_running_var, weight=bn3_weight, bias=bn3_bias)
             relu_3 = F.relu(bn3_out)
             relu_3 = feature_convert(relu_3, bn_integer, bn_decimal)
@@ -479,13 +491,13 @@ if __name__ == '__main__':
             # max_bn = calculate_max(relu_3,max_bn)
 
             res1_conv1_out = F.conv2d(relu_3,res1_conv1_weight,bias=res1_conv1_bias,padding=1)
-            # res1_conv1_out = feature_convert(res1_conv1_out, conv_integer, conv_decimal)
+            res1_conv1_out = feature_convert(res1_conv1_out, conv_integer, conv_decimal)
             res1_bn1_out   = F.batch_norm(res1_conv1_out,res1_bn1_running_mean,res1_bn1_running_var,weight=res1_bn1_weight,bias=res1_bn1_bias)
             relu_res1      = F.relu(res1_bn1_out)
             relu_res1 = feature_convert(relu_res1, bn_integer, bn_decimal)
             # max_bn = calculate_max(relu_res1,max_bn)
             res1_conv2_out = F.conv2d(relu_res1,res1_conv2_weight,bias=res1_conv2_bias,padding=1)
-            # res1_conv2_out = feature_convert(res1_conv2_out, conv_integer, conv_decimal)
+            res1_conv2_out = feature_convert(res1_conv2_out, conv_integer, conv_decimal)
             res1_bn2_out   = F.batch_norm(res1_conv2_out,res1_bn2_running_mean,res1_bn2_running_var,weight=res1_bn2_weight,bias=res1_bn2_bias)
 
             res1_out = relu_3 + res1_bn2_out
@@ -495,13 +507,13 @@ if __name__ == '__main__':
             # max_bn = calculate_max(res1_out,max_bn)
 
             res2_conv1_out = F.conv2d(res1_out,res2_conv1_weight,bias=res2_conv1_bias,padding=1)
-            # res2_conv1_out = feature_convert(res2_conv1_out, conv_integer, conv_decimal)
+            res2_conv1_out = feature_convert(res2_conv1_out, conv_integer, conv_decimal)
             res2_bn1_out   = F.batch_norm(res2_conv1_out,res2_bn1_running_mean,res2_bn1_running_var,weight=res2_bn1_weight,bias=res2_bn1_bias)
             relu_res2      = F.relu(res2_bn1_out)
             relu_res2 = feature_convert(relu_res2, bn_integer, bn_decimal)
             # max_bn = calculate_max(relu_res2,max_bn)
             res2_conv2_out = F.conv2d(relu_res2,res2_conv2_weight,bias=res2_conv2_bias,padding=1)
-            # res2_conv2_out = feature_convert(res2_conv2_out, conv_integer, conv_decimal)
+            res2_conv2_out = feature_convert(res2_conv2_out, conv_integer, conv_decimal)
             res2_bn2_out   = F.batch_norm(res2_conv2_out,res2_bn2_running_mean,res2_bn2_running_var,weight=res2_bn2_weight,bias=res2_bn2_bias)
 
             res2_out = res1_out + res2_bn2_out
@@ -510,13 +522,13 @@ if __name__ == '__main__':
             # max_bn = calculate_max(res2_out,max_bn)
 
             res3_conv1_out = F.conv2d(res2_out,res3_conv1_weight,bias=res3_conv1_bias,padding=1)
-            # res3_conv1_out = feature_convert(res3_conv1_out, conv_integer, conv_decimal)
+            res3_conv1_out = feature_convert(res3_conv1_out, conv_integer, conv_decimal)
             res3_bn1_out   = F.batch_norm(res3_conv1_out,res3_bn1_running_mean,res3_bn1_running_var,weight=res3_bn1_weight,bias=res3_bn1_bias)
             relu_res3      = F.relu(res3_bn1_out)
             relu_res3 = feature_convert(relu_res3, bn_integer, bn_decimal)
             # max_bn = calculate_max(relu_res3,max_bn)
             res3_conv2_out = F.conv2d(relu_res3,res3_conv2_weight,bias=res3_conv2_bias,padding=1)
-            # res3_conv2_out = feature_convert(res3_conv2_out, conv_integer, conv_decimal)
+            res3_conv2_out = feature_convert(res3_conv2_out, conv_integer, conv_decimal)
             res3_bn2_out   = F.batch_norm(res3_conv2_out,res3_bn2_running_mean,res3_bn2_running_var,weight=res3_bn2_weight,bias=res3_bn2_bias)
 
             res3_out = res2_out + res3_bn2_out
@@ -525,13 +537,13 @@ if __name__ == '__main__':
             # max_bn = calculate_max(res3_out,max_bn)
 
             res4_conv1_out = F.conv2d(res3_out,res4_conv1_weight,bias=res4_conv1_bias,padding=1)
-            # res4_conv1_out = feature_convert(res4_conv1_out, conv_integer, conv_decimal)
+            res4_conv1_out = feature_convert(res4_conv1_out, conv_integer, conv_decimal)
             res4_bn1_out   = F.batch_norm(res4_conv1_out,res4_bn1_running_mean,res4_bn1_running_var,weight=res4_bn1_weight,bias=res4_bn1_bias)
             relu_res4      = F.relu(res4_bn1_out)
             relu_res4 = feature_convert(relu_res4, bn_integer, bn_decimal)
             # max_bn = calculate_max(relu_res4,max_bn)
             res4_conv2_out = F.conv2d(relu_res4,res4_conv2_weight,bias=res4_conv2_bias,padding=1)
-            # res4_conv2_out = feature_convert(res4_conv2_out, conv_integer, conv_decimal)
+            res4_conv2_out = feature_convert(res4_conv2_out, conv_integer, conv_decimal)
             res4_bn2_out   = F.batch_norm(res4_conv2_out,res4_bn2_running_mean,res4_bn2_running_var,weight=res4_bn2_weight,bias=res4_bn2_bias)
 
             res4_out = res3_out + res4_bn2_out
@@ -540,13 +552,13 @@ if __name__ == '__main__':
             # max_bn = calculate_max(res4_out,max_bn)
 
             res5_conv1_out = F.conv2d(res4_out,res5_conv1_weight,bias=res5_conv1_bias,padding=1)
-            # res5_conv1_out = feature_convert(res5_conv1_out, conv_integer, conv_decimal)
+            res5_conv1_out = feature_convert(res5_conv1_out, conv_integer, conv_decimal)
             res5_bn1_out   = F.batch_norm(res5_conv1_out,res5_bn1_running_mean,res5_bn1_running_var,weight=res5_bn1_weight,bias=res5_bn1_bias)
             relu_res5      = F.relu(res5_bn1_out)
             relu_res5 = feature_convert(relu_res5, bn_integer, bn_decimal)
             # max_bn = calculate_max(relu_res5,max_bn)
             res5_conv2_out = F.conv2d(relu_res5,res5_conv2_weight,bias=res5_conv2_bias,padding=1)
-            # res5_conv2_out = feature_convert(res5_conv2_out, conv_integer, conv_decimal)
+            res5_conv2_out = feature_convert(res5_conv2_out, conv_integer, conv_decimal)
             res5_bn2_out   = F.batch_norm(res5_conv2_out,res5_bn2_running_mean,res5_bn2_running_var,weight=res5_bn2_weight,bias=res5_bn2_bias)
 
             res5_out = res4_out + res5_bn2_out
@@ -555,7 +567,7 @@ if __name__ == '__main__':
             # max_bn = calculate_max(res5_out,max_bn)
 
             conv4_out = F.conv_transpose2d(res5_out,conv4_weight,bias=conv4_bias,padding=1,output_padding=1,stride=2)
-            # conv4_out = feature_convert(conv4_out, conv_integer, conv_decimal)
+            conv4_out = feature_convert(conv4_out, conv_integer, conv_decimal)
             bn4_out = F.batch_norm(conv4_out,bn4_running_mean,bn4_running_var,weight=bn4_weight,bias=bn4_bias)
             relu_4 = F.relu(bn4_out)
             relu_4 = feature_convert(relu_4, bn_integer, bn_decimal)
@@ -563,7 +575,7 @@ if __name__ == '__main__':
             # max_bn = calculate_max(relu_4,max_bn)
 
             conv5_out = F.conv_transpose2d(relu_4,conv5_weight,bias=conv5_bias,padding=2,output_padding=1,stride=2)
-            # conv5_out = feature_convert(conv5_out, conv_integer, conv_decimal)
+            conv5_out = feature_convert(conv5_out, conv_integer, conv_decimal)
             bn5_out = F.batch_norm(conv5_out,bn5_running_mean,bn5_running_var,weight=bn5_weight,bias=bn5_bias)
             relu_5 = F.relu(bn5_out)
             relu_5 = feature_convert(relu_5, bn_integer, bn_decimal)
@@ -571,16 +583,16 @@ if __name__ == '__main__':
             # max_bn = calculate_max(relu_5,max_bn)
 
             conv6_out = F.conv_transpose2d(relu_5,conv6_weight,bias=conv6_bias,padding=4,stride=1)
-            # conv6_out = feature_convert(conv6_out, conv_integer, conv_decimal)
+            conv6_out = feature_convert(conv6_out, conv_integer, conv_decimal)
 
             pos_out = F.conv2d(conv6_out,pos_weight,bias=pos_bias)
-            pos_out = feature_convert(pos_out, conv_integer, conv_decimal)
+            pos_out = feature_convert(pos_out, out_integer, out_decimal)
             cos_out = F.conv2d(conv6_out,cos_weight,bias=cos_bias)
-            cos_out = feature_convert(cos_out, conv_integer, conv_decimal)
+            cos_out = feature_convert(cos_out, out_integer, out_decimal)
             sin_out = F.conv2d(conv6_out,sin_weight,bias=sin_bias)
-            sin_out = feature_convert(sin_out, conv_integer, conv_decimal)
+            sin_out = feature_convert(sin_out, out_integer, out_decimal)
             width_out = F.conv2d(conv6_out,width_weight,bias=width_bias)
-            width_out = feature_convert(width_out, conv_integer, conv_decimal)
+            width_out = feature_convert(width_out, out_integer, out_decimal)
 
             loss_fix = loss(pos_out,cos_out,sin_out,width_out,y)
 
