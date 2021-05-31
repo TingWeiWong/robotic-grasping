@@ -15,11 +15,32 @@ conv1_weight = model_dict['bn2.num_batches_tracked']
 # print(conv1_weight)
 
 def param_convert(x, a):
-    y = Fxp(x, signed=True, n_word=a+2, n_frac=a, overflow='saturate', rounding='around')
+    y = Fxp(x, signed=True, n_word=a+3, n_frac=a, overflow='saturate', rounding='around')
     y = y.get_val()
     if(a==100):
         y = torch.from_numpy(x)
     else:
+        max = 0
+        y_a  = np.abs(y)
+        
+        # for i in range(len(y)):
+        #     s = y_a[i]
+        #     if(s>=max):
+        #         max = s
+        # print("max = ", s)
+        y = torch.from_numpy(y)
+    y = y.type(torch.FloatTensor)
+    return y
+
+def feature_convert(x, integer, decimal):
+    y = x.numpy()
+    # y = Fxp(y, signed=True, n_word=integer+decimal+1, n_frac=decimal, overflow='saturate', rounding='around')
+    # y = y.get_val()
+    if(decimal==100):
+        y = torch.from_numpy(y)
+    else:
+        y = Fxp(y, signed=True, n_word=integer+decimal+1, n_frac=decimal, overflow='saturate', rounding='around')
+        y = y.get_val()
         y = torch.from_numpy(y)
     y = y.type(torch.FloatTensor)
     return y
@@ -48,4 +69,10 @@ def loss(pos_pred, cos_pred, sin_pred, width_pred, yc):
             }
         }
 
-    
+def calculate_max(x, max):
+    x = x.numpy()
+    if(np.amax(x)>=max):
+        max_out = np.amax(x)
+    else:
+        max_out = max
+    return max_out
