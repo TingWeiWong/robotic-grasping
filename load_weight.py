@@ -33,8 +33,8 @@ conv1_weight = model_dict['conv1.weight']
 for key in model_dict:
 	message = "Layer: {} Size: {}".format(key,model_dict[key].size())
 	print (message)
-	x = model_dict[key].numpy()
-	print(np.amax(x))
+	# x = model_dict[key].numpy()
+	# print(np.amax(x))
 # print ("'conv1.bias' = ",model_dict["'conv1.bias'"])
 # print ("Net = ",net)
 # print ("Type of net = ", type(net))

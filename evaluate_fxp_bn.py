@@ -121,7 +121,7 @@ if __name__ == '__main__':
         print(x_0.size())
         print(x_1.size())
 
-        param_lenth = 100
+        param_lenth = 5
         bias_length = 100
         bn_length = 100
         x_integer = 0
@@ -325,12 +325,64 @@ if __name__ == '__main__':
             bn5_running_mean[i] = 0
 
         for i in range(len(conv1_weight)):
-            conv1_bias[i] = conv1_bias[i]+bn1_bias[i]
+            conv1_bias[i] = conv1_bias[i]*bn1_weight[i]+bn1_bias[i]
             for j in range(len(conv1_weight[0])):
                 for k in range(len(conv1_weight[0][0])):
                     for z in range(len(conv1_weight[0][0][0])):
                         conv1_weight[i][j][k][z] = conv1_weight[i][j][k][z]*bn1_weight[i]
+
+        for i in range(len(conv2_weight)):
+            conv2_bias[i] = conv2_bias[i]*bn2_weight[i]+bn2_bias[i]
+            for j in range(len(conv2_weight[0])):
+                for k in range(len(conv2_weight[0][0])):
+                    for z in range(len(conv2_weight[0][0][0])):
+                        conv2_weight[i][j][k][z] = conv2_weight[i][j][k][z]*bn2_weight[i]
                     
+        for i in range(len(conv3_weight)):
+            conv3_bias[i] = conv3_bias[i]*bn3_weight[i]+bn3_bias[i]
+            for j in range(len(conv3_weight[0])):
+                for k in range(len(conv3_weight[0][0])):
+                    for z in range(len(conv3_weight[0][0][0])):
+                        conv3_weight[i][j][k][z] = conv3_weight[i][j][k][z]*bn3_weight[i]
+
+        for i in range(len(res1_conv1_weight)):
+            res1_conv1_bias[i] = res1_conv1_bias[i]*res1_bn1_weight[i]+res1_bn1_bias[i]
+            res1_conv2_bias[i] = res1_conv2_bias[i]*res1_bn2_weight[i]+res1_bn2_bias[i]
+            res2_conv1_bias[i] = res2_conv1_bias[i]*res2_bn1_weight[i]+res2_bn1_bias[i]
+            res2_conv2_bias[i] = res2_conv2_bias[i]*res2_bn2_weight[i]+res2_bn2_bias[i]
+            res3_conv1_bias[i] = res3_conv1_bias[i]*res3_bn1_weight[i]+res3_bn1_bias[i]
+            res3_conv2_bias[i] = res3_conv2_bias[i]*res3_bn2_weight[i]+res3_bn2_bias[i]
+            res4_conv1_bias[i] = res4_conv1_bias[i]*res4_bn1_weight[i]+res4_bn1_bias[i]
+            res4_conv2_bias[i] = res4_conv2_bias[i]*res4_bn2_weight[i]+res4_bn2_bias[i]
+            res5_conv1_bias[i] = res5_conv1_bias[i]*res5_bn1_weight[i]+res5_bn1_bias[i]
+            res5_conv2_bias[i] = res5_conv2_bias[i]*res5_bn2_weight[i]+res5_bn2_bias[i]
+            for j in range(len(res1_conv1_weight[0])):
+                for k in range(len(res1_conv1_weight[0][0])):
+                    for z in range(len(res1_conv1_weight[0][0][0])):
+                        res1_conv1_weight[i][j][k][z] = res1_conv1_weight[i][j][k][z]*res1_bn1_weight[i]
+                        res1_conv2_weight[i][j][k][z] = res1_conv2_weight[i][j][k][z]*res1_bn2_weight[i]
+                        res2_conv1_weight[i][j][k][z] = res2_conv1_weight[i][j][k][z]*res2_bn1_weight[i]
+                        res2_conv2_weight[i][j][k][z] = res2_conv2_weight[i][j][k][z]*res2_bn2_weight[i]
+                        res3_conv1_weight[i][j][k][z] = res3_conv1_weight[i][j][k][z]*res3_bn1_weight[i]
+                        res3_conv2_weight[i][j][k][z] = res3_conv2_weight[i][j][k][z]*res3_bn2_weight[i]
+                        res4_conv1_weight[i][j][k][z] = res4_conv1_weight[i][j][k][z]*res4_bn1_weight[i]
+                        res4_conv2_weight[i][j][k][z] = res4_conv2_weight[i][j][k][z]*res4_bn2_weight[i]
+                        res5_conv1_weight[i][j][k][z] = res5_conv1_weight[i][j][k][z]*res5_bn1_weight[i]
+                        res5_conv2_weight[i][j][k][z] = res5_conv2_weight[i][j][k][z]*res5_bn2_weight[i]
+
+        for i in range(len(conv4_weight[0])):
+            conv4_bias[i] = conv4_bias[i]*bn4_weight[i]+bn4_bias[i]
+            for j in range(len(conv4_weight)):
+                for k in range(len(conv4_weight[0][0])):
+                    for z in range(len(conv4_weight[0][0][0])):
+                        conv4_weight[j][i][k][z] = conv4_weight[j][i][k][z]*bn4_weight[i]
+
+        for i in range(len(conv5_weight[0])):
+            conv5_bias[i] = conv5_bias[i]*bn5_weight[i]+bn5_bias[i]
+            for j in range(len(conv5_weight)):
+                for k in range(len(conv5_weight[0][0])):
+                    for z in range(len(conv5_weight[0][0][0])):
+                        conv5_weight[j][i][k][z] = conv5_weight[j][i][k][z]*bn5_weight[i]
 
         print("bn1_weight = ",bn1_weight)
         print("bn1_bias = ",bn1_bias)
@@ -339,103 +391,103 @@ if __name__ == '__main__':
         conv1_bias = param_convert(conv1_bias,bias_length)
         print(conv1_weight.size())
         print(conv1_bias.size())
-        bn1_weight = param_convert(bn1_weight,bn_length)
-        bn1_bias = param_convert(bn1_bias,bn_length)
-        bn1_running_mean = param_convert(bn1_running_mean,100)
-        bn1_running_var = param_convert(bn1_running_var,100)
+        # bn1_weight = param_convert(bn1_weight,bn_length)
+        # bn1_bias = param_convert(bn1_bias,bn_length)
+        # bn1_running_mean = param_convert(bn1_running_mean,100)
+        # bn1_running_var = param_convert(bn1_running_var,100)
 
         conv2_weight = param_convert(conv2_weight,param_lenth)
         conv2_bias = param_convert(conv2_bias,bias_length)
-        bn2_weight = param_convert(bn2_weight,bn_length)
-        bn2_bias = param_convert(bn2_bias,bn_length)
-        bn2_running_mean = param_convert(bn2_running_mean,100)
-        bn2_running_var = param_convert(bn2_running_var,100)
+        # bn2_weight = param_convert(bn2_weight,bn_length)
+        # bn2_bias = param_convert(bn2_bias,bn_length)
+        # bn2_running_mean = param_convert(bn2_running_mean,100)
+        # bn2_running_var = param_convert(bn2_running_var,100)
 
         conv3_weight = param_convert(conv3_weight,param_lenth)
         conv3_bias = param_convert(conv3_bias,bias_length)
-        bn3_weight = param_convert(bn3_weight,bn_length)
-        bn3_bias = param_convert(bn3_bias,bn_length)
-        bn3_running_mean = param_convert(bn3_running_mean,100)
-        bn3_running_var = param_convert(bn3_running_var,100)
+        # bn3_weight = param_convert(bn3_weight,bn_length)
+        # bn3_bias = param_convert(bn3_bias,bn_length)
+        # bn3_running_mean = param_convert(bn3_running_mean,100)
+        # bn3_running_var = param_convert(bn3_running_var,100)
 
         res1_conv1_weight = param_convert(res1_conv1_weight,param_lenth)
         res1_conv1_bias = param_convert(res1_conv1_bias,bias_length)
-        res1_bn1_weight = param_convert(res1_bn1_weight,bn_length)
-        res1_bn1_bias = param_convert(res1_bn1_bias,bn_length)
-        res1_bn1_running_mean = param_convert(res1_bn1_running_mean,100)
-        res1_bn1_running_var = param_convert(res1_bn1_running_var,100)
+        # res1_bn1_weight = param_convert(res1_bn1_weight,bn_length)
+        # res1_bn1_bias = param_convert(res1_bn1_bias,bn_length)
+        # res1_bn1_running_mean = param_convert(res1_bn1_running_mean,100)
+        # res1_bn1_running_var = param_convert(res1_bn1_running_var,100)
         res1_conv2_weight = param_convert(res1_conv2_weight,param_lenth)
         res1_conv2_bias = param_convert(res1_conv2_bias,bias_length)
-        res1_bn2_weight = param_convert(res1_bn2_weight,bn_length)
-        res1_bn2_bias = param_convert(res1_bn2_bias,bn_length)
-        res1_bn2_running_mean = param_convert(res1_bn2_running_mean,100)
-        res1_bn2_running_var = param_convert(res1_bn2_running_var,100)
+        # res1_bn2_weight = param_convert(res1_bn2_weight,bn_length)
+        # res1_bn2_bias = param_convert(res1_bn2_bias,bn_length)
+        # res1_bn2_running_mean = param_convert(res1_bn2_running_mean,100)
+        # res1_bn2_running_var = param_convert(res1_bn2_running_var,100)
 
         res2_conv1_weight =     param_convert(res2_conv1_weight,param_lenth)
         res2_conv1_bias =       param_convert(res2_conv1_bias,bias_length)
-        res2_bn1_weight =       param_convert(res2_bn1_weight,bn_length)
-        res2_bn1_bias =         param_convert(res2_bn1_bias,bn_length)
-        res2_bn1_running_mean = param_convert(res2_bn1_running_mean,100)
-        res2_bn1_running_var =  param_convert(res2_bn1_running_var,100)
+        # res2_bn1_weight =       param_convert(res2_bn1_weight,bn_length)
+        # res2_bn1_bias =         param_convert(res2_bn1_bias,bn_length)
+        # res2_bn1_running_mean = param_convert(res2_bn1_running_mean,100)
+        # res2_bn1_running_var =  param_convert(res2_bn1_running_var,100)
         res2_conv2_weight =     param_convert(res2_conv2_weight,param_lenth)
         res2_conv2_bias =       param_convert(res2_conv2_bias,bias_length)
-        res2_bn2_weight =       param_convert(res2_bn2_weight,bn_length)
-        res2_bn2_bias =         param_convert(res2_bn2_bias,bn_length)
-        res2_bn2_running_mean = param_convert(res2_bn2_running_mean,100)
-        res2_bn2_running_var =  param_convert(res2_bn2_running_var,100)
+        # res2_bn2_weight =       param_convert(res2_bn2_weight,bn_length)
+        # res2_bn2_bias =         param_convert(res2_bn2_bias,bn_length)
+        # res2_bn2_running_mean = param_convert(res2_bn2_running_mean,100)
+        # res2_bn2_running_var =  param_convert(res2_bn2_running_var,100)
 
         res3_conv1_weight =     param_convert(res3_conv1_weight,param_lenth)
         res3_conv1_bias =       param_convert(res3_conv1_bias,bias_length)
-        res3_bn1_weight =       param_convert(res3_bn1_weight,bn_length)
-        res3_bn1_bias =         param_convert(res3_bn1_bias,bn_length)
-        res3_bn1_running_mean = param_convert(res3_bn1_running_mean,100)
-        res3_bn1_running_var =  param_convert(res3_bn1_running_var,100)
+        # res3_bn1_weight =       param_convert(res3_bn1_weight,bn_length)
+        # res3_bn1_bias =         param_convert(res3_bn1_bias,bn_length)
+        # res3_bn1_running_mean = param_convert(res3_bn1_running_mean,100)
+        # res3_bn1_running_var =  param_convert(res3_bn1_running_var,100)
         res3_conv2_weight =     param_convert(res3_conv2_weight,param_lenth)
         res3_conv2_bias =       param_convert(res3_conv2_bias,bias_length)
-        res3_bn2_weight =       param_convert(res3_bn2_weight,bn_length)
-        res3_bn2_bias =         param_convert(res3_bn2_bias,bn_length)
-        res3_bn2_running_mean = param_convert(res3_bn2_running_mean,100)
-        res3_bn2_running_var =  param_convert(res3_bn2_running_var,100)
+        # res3_bn2_weight =       param_convert(res3_bn2_weight,bn_length)
+        # res3_bn2_bias =         param_convert(res3_bn2_bias,bn_length)
+        # res3_bn2_running_mean = param_convert(res3_bn2_running_mean,100)
+        # res3_bn2_running_var =  param_convert(res3_bn2_running_var,100)
 
         res4_conv1_weight =     param_convert(res4_conv1_weight,param_lenth)
         res4_conv1_bias =       param_convert(res4_conv1_bias,bias_length)
-        res4_bn1_weight =       param_convert(res4_bn1_weight,bn_length)
-        res4_bn1_bias =         param_convert(res4_bn1_bias,bn_length)
-        res4_bn1_running_mean = param_convert(res4_bn1_running_mean,100)
-        res4_bn1_running_var =  param_convert(res4_bn1_running_var,100)
+        # res4_bn1_weight =       param_convert(res4_bn1_weight,bn_length)
+        # res4_bn1_bias =         param_convert(res4_bn1_bias,bn_length)
+        # res4_bn1_running_mean = param_convert(res4_bn1_running_mean,100)
+        # res4_bn1_running_var =  param_convert(res4_bn1_running_var,100)
         res4_conv2_weight =     param_convert(res4_conv2_weight,param_lenth)
         res4_conv2_bias =       param_convert(res4_conv2_bias,bias_length)
-        res4_bn2_weight =       param_convert(res4_bn2_weight,bn_length)
-        res4_bn2_bias =         param_convert(res4_bn2_bias,bn_length)
-        res4_bn2_running_mean = param_convert(res4_bn2_running_mean,100)
-        res4_bn2_running_var =  param_convert(res4_bn2_running_var,100)
+        # res4_bn2_weight =       param_convert(res4_bn2_weight,bn_length)
+        # res4_bn2_bias =         param_convert(res4_bn2_bias,bn_length)
+        # res4_bn2_running_mean = param_convert(res4_bn2_running_mean,100)
+        # res4_bn2_running_var =  param_convert(res4_bn2_running_var,100)
 
         res5_conv1_weight =     param_convert(res5_conv1_weight,param_lenth)
         res5_conv1_bias =       param_convert(res5_conv1_bias,bias_length)
-        res5_bn1_weight =       param_convert(res5_bn1_weight,bn_length)
-        res5_bn1_bias =         param_convert(res5_bn1_bias,bn_length)
-        res5_bn1_running_mean = param_convert(res5_bn1_running_mean,100)
-        res5_bn1_running_var =  param_convert(res5_bn1_running_var,100)
+        # res5_bn1_weight =       param_convert(res5_bn1_weight,bn_length)
+        # res5_bn1_bias =         param_convert(res5_bn1_bias,bn_length)
+        # res5_bn1_running_mean = param_convert(res5_bn1_running_mean,100)
+        # res5_bn1_running_var =  param_convert(res5_bn1_running_var,100)
         res5_conv2_weight =     param_convert(res5_conv2_weight,param_lenth)
         res5_conv2_bias =       param_convert(res5_conv2_bias,bias_length)
-        res5_bn2_weight =       param_convert(res5_bn2_weight,bn_length)
-        res5_bn2_bias =         param_convert(res5_bn2_bias,bn_length)
-        res5_bn2_running_mean = param_convert(res5_bn2_running_mean,100)
-        res5_bn2_running_var =  param_convert(res5_bn2_running_var,100)
+        # res5_bn2_weight =       param_convert(res5_bn2_weight,bn_length)
+        # res5_bn2_bias =         param_convert(res5_bn2_bias,bn_length)
+        # res5_bn2_running_mean = param_convert(res5_bn2_running_mean,100)
+        # res5_bn2_running_var =  param_convert(res5_bn2_running_var,100)
 
         conv4_weight = param_convert(conv4_weight,param_lenth)
         conv4_bias = param_convert(conv4_bias,bias_length)
-        bn4_weight = param_convert(bn4_weight,bn_length)
-        bn4_bias = param_convert(bn4_bias,bn_length)
-        bn4_running_mean = param_convert(bn4_running_mean,100)
-        bn4_running_var = param_convert(bn4_running_var,100)
+        # bn4_weight = param_convert(bn4_weight,bn_length)
+        # bn4_bias = param_convert(bn4_bias,bn_length)
+        # bn4_running_mean = param_convert(bn4_running_mean,100)
+        # bn4_running_var = param_convert(bn4_running_var,100)
 
         conv5_weight = param_convert(conv5_weight,param_lenth)
         conv5_bias = param_convert(conv5_bias,bias_length)
-        bn5_weight = param_convert(bn5_weight,bn_length)
-        bn5_bias = param_convert(bn5_bias,bn_length)
-        bn5_running_mean = param_convert(bn5_running_mean,100)
-        bn5_running_var = param_convert(bn5_running_var,100)
+        # bn5_weight = param_convert(bn5_weight,bn_length)
+        # bn5_bias = param_convert(bn5_bias,bn_length)
+        # bn5_running_mean = param_convert(bn5_running_mean,100)
+        # bn5_running_var = param_convert(bn5_running_var,100)
 
         conv6_weight = param_convert(conv6_weight,param_lenth)
         conv6_bias = param_convert(conv6_bias,bias_length)
@@ -466,119 +518,119 @@ if __name__ == '__main__':
             # x = torch.from_numpy(x) 
             x = param_convert(x, x_decimal)
             conv1_out = F.conv2d(x,conv1_weight,bias=conv1_bias,padding=4)
-            conv1_out = feature_convert(conv1_out, conv_integer, conv_decimal)
+            # conv1_out = feature_convert(conv1_out, conv_integer, conv_decimal)
             # bn1_out = F.batch_norm(conv1_out, bn1_running_mean, bn1_running_var, weight=bn1_weight, bias=bn1_bias)
             
             relu_1 = F.relu(conv1_out)
-            relu_1 = feature_convert(relu_1, bn_integer, bn_decimal)
+            relu_1 = feature_convert(relu_1, conv_integer, conv_decimal)
 
             # max_bn = calculate_max(relu_1,max_bn)
 
             conv2_out = F.conv2d(relu_1,conv2_weight,bias=conv2_bias,padding=1,stride=2)
-            conv2_out = feature_convert(conv2_out, conv_integer, conv_decimal)
-            bn2_out = F.batch_norm(conv2_out, bn2_running_mean, bn2_running_var, weight=bn2_weight, bias=bn2_bias)
-            relu_2 = F.relu(bn2_out)
-            relu_2 = feature_convert(relu_2, bn_integer, bn_decimal)
+            # conv2_out = feature_convert(conv2_out, conv_integer, conv_decimal)
+            # bn2_out = F.batch_norm(conv2_out, bn2_running_mean, bn2_running_var, weight=bn2_weight, bias=bn2_bias)
+            relu_2 = F.relu(conv2_out)
+            relu_2 = feature_convert(relu_2, conv_integer, conv_decimal)
 
             # max_bn = calculate_max(relu_2,max_bn)
 
             conv3_out = F.conv2d(relu_2,conv3_weight,bias=conv3_bias,padding=1,stride=2)
-            conv3_out = feature_convert(conv3_out, conv_integer, conv_decimal)
-            bn3_out = F.batch_norm(conv3_out, bn3_running_mean, bn3_running_var, weight=bn3_weight, bias=bn3_bias)
-            relu_3 = F.relu(bn3_out)
-            relu_3 = feature_convert(relu_3, bn_integer, bn_decimal)
+            # conv3_out = feature_convert(conv3_out, conv_integer, conv_decimal)
+            # bn3_out = F.batch_norm(conv3_out, bn3_running_mean, bn3_running_var, weight=bn3_weight, bias=bn3_bias)
+            relu_3 = F.relu(conv3_out)
+            relu_3 = feature_convert(relu_3, conv_integer, conv_decimal)
 
             # max_bn = calculate_max(relu_3,max_bn)
 
             res1_conv1_out = F.conv2d(relu_3,res1_conv1_weight,bias=res1_conv1_bias,padding=1)
-            res1_conv1_out = feature_convert(res1_conv1_out, conv_integer, conv_decimal)
-            res1_bn1_out   = F.batch_norm(res1_conv1_out,res1_bn1_running_mean,res1_bn1_running_var,weight=res1_bn1_weight,bias=res1_bn1_bias)
-            relu_res1      = F.relu(res1_bn1_out)
-            relu_res1 = feature_convert(relu_res1, bn_integer, bn_decimal)
+            # res1_conv1_out = feature_convert(res1_conv1_out, conv_integer, conv_decimal)
+            # res1_bn1_out   = F.batch_norm(res1_conv1_out,res1_bn1_running_mean,res1_bn1_running_var,weight=res1_bn1_weight,bias=res1_bn1_bias)
+            relu_res1      = F.relu(res1_conv1_out)
+            relu_res1 = feature_convert(relu_res1, conv_integer, conv_decimal)
             # max_bn = calculate_max(relu_res1,max_bn)
             res1_conv2_out = F.conv2d(relu_res1,res1_conv2_weight,bias=res1_conv2_bias,padding=1)
-            res1_conv2_out = feature_convert(res1_conv2_out, conv_integer, conv_decimal)
-            res1_bn2_out   = F.batch_norm(res1_conv2_out,res1_bn2_running_mean,res1_bn2_running_var,weight=res1_bn2_weight,bias=res1_bn2_bias)
+            # res1_conv2_out = feature_convert(res1_conv2_out, conv_integer, conv_decimal)
+            # res1_bn2_out   = F.batch_norm(res1_conv2_out,res1_bn2_running_mean,res1_bn2_running_var,weight=res1_bn2_weight,bias=res1_bn2_bias)
 
-            res1_out = relu_3 + res1_bn2_out
+            res1_out = relu_3 + res1_conv2_out
 
-            res1_out = feature_convert(res1_out, bn_integer, bn_decimal)
+            res1_out = feature_convert(res1_out, conv_integer, conv_decimal)
 
             # max_bn = calculate_max(res1_out,max_bn)
 
             res2_conv1_out = F.conv2d(res1_out,res2_conv1_weight,bias=res2_conv1_bias,padding=1)
-            res2_conv1_out = feature_convert(res2_conv1_out, conv_integer, conv_decimal)
-            res2_bn1_out   = F.batch_norm(res2_conv1_out,res2_bn1_running_mean,res2_bn1_running_var,weight=res2_bn1_weight,bias=res2_bn1_bias)
-            relu_res2      = F.relu(res2_bn1_out)
-            relu_res2 = feature_convert(relu_res2, bn_integer, bn_decimal)
+            # res2_conv1_out = feature_convert(res2_conv1_out, conv_integer, conv_decimal)
+            # res2_bn1_out   = F.batch_norm(res2_conv1_out,res2_bn1_running_mean,res2_bn1_running_var,weight=res2_bn1_weight,bias=res2_bn1_bias)
+            relu_res2      = F.relu(res2_conv1_out)
+            relu_res2 = feature_convert(relu_res2, conv_integer, conv_decimal)
             # max_bn = calculate_max(relu_res2,max_bn)
             res2_conv2_out = F.conv2d(relu_res2,res2_conv2_weight,bias=res2_conv2_bias,padding=1)
-            res2_conv2_out = feature_convert(res2_conv2_out, conv_integer, conv_decimal)
-            res2_bn2_out   = F.batch_norm(res2_conv2_out,res2_bn2_running_mean,res2_bn2_running_var,weight=res2_bn2_weight,bias=res2_bn2_bias)
+            # res2_conv2_out = feature_convert(res2_conv2_out, conv_integer, conv_decimal)
+            # res2_bn2_out   = F.batch_norm(res2_conv2_out,res2_bn2_running_mean,res2_bn2_running_var,weight=res2_bn2_weight,bias=res2_bn2_bias)
 
-            res2_out = res1_out + res2_bn2_out
-            res2_out = feature_convert(res2_out, bn_integer, bn_decimal)
+            res2_out = res1_out + res2_conv2_out
+            res2_out = feature_convert(res2_out, conv_integer, conv_decimal)
 
             # max_bn = calculate_max(res2_out,max_bn)
 
             res3_conv1_out = F.conv2d(res2_out,res3_conv1_weight,bias=res3_conv1_bias,padding=1)
-            res3_conv1_out = feature_convert(res3_conv1_out, conv_integer, conv_decimal)
-            res3_bn1_out   = F.batch_norm(res3_conv1_out,res3_bn1_running_mean,res3_bn1_running_var,weight=res3_bn1_weight,bias=res3_bn1_bias)
-            relu_res3      = F.relu(res3_bn1_out)
-            relu_res3 = feature_convert(relu_res3, bn_integer, bn_decimal)
+            # res3_conv1_out = feature_convert(res3_conv1_out, conv_integer, conv_decimal)
+            # res3_bn1_out   = F.batch_norm(res3_conv1_out,res3_bn1_running_mean,res3_bn1_running_var,weight=res3_bn1_weight,bias=res3_bn1_bias)
+            relu_res3      = F.relu(res3_conv1_out)
+            relu_res3 = feature_convert(relu_res3, conv_integer, conv_decimal)
             # max_bn = calculate_max(relu_res3,max_bn)
             res3_conv2_out = F.conv2d(relu_res3,res3_conv2_weight,bias=res3_conv2_bias,padding=1)
-            res3_conv2_out = feature_convert(res3_conv2_out, conv_integer, conv_decimal)
-            res3_bn2_out   = F.batch_norm(res3_conv2_out,res3_bn2_running_mean,res3_bn2_running_var,weight=res3_bn2_weight,bias=res3_bn2_bias)
+            # res3_conv2_out = feature_convert(res3_conv2_out, conv_integer, conv_decimal)
+            # res3_bn2_out   = F.batch_norm(res3_conv2_out,res3_bn2_running_mean,res3_bn2_running_var,weight=res3_bn2_weight,bias=res3_bn2_bias)
 
-            res3_out = res2_out + res3_bn2_out
-            res3_out = feature_convert(res3_out, bn_integer, bn_decimal)
+            res3_out = res2_out + res3_conv2_out
+            res3_out = feature_convert(res3_out, conv_integer, conv_decimal)
 
             # max_bn = calculate_max(res3_out,max_bn)
 
             res4_conv1_out = F.conv2d(res3_out,res4_conv1_weight,bias=res4_conv1_bias,padding=1)
-            res4_conv1_out = feature_convert(res4_conv1_out, conv_integer, conv_decimal)
-            res4_bn1_out   = F.batch_norm(res4_conv1_out,res4_bn1_running_mean,res4_bn1_running_var,weight=res4_bn1_weight,bias=res4_bn1_bias)
-            relu_res4      = F.relu(res4_bn1_out)
-            relu_res4 = feature_convert(relu_res4, bn_integer, bn_decimal)
+            # res4_conv1_out = feature_convert(res4_conv1_out, conv_integer, conv_decimal)
+            # res4_bn1_out   = F.batch_norm(res4_conv1_out,res4_bn1_running_mean,res4_bn1_running_var,weight=res4_bn1_weight,bias=res4_bn1_bias)
+            relu_res4      = F.relu(res4_conv1_out)
+            relu_res4 = feature_convert(relu_res4, conv_integer, conv_decimal)
             # max_bn = calculate_max(relu_res4,max_bn)
             res4_conv2_out = F.conv2d(relu_res4,res4_conv2_weight,bias=res4_conv2_bias,padding=1)
-            res4_conv2_out = feature_convert(res4_conv2_out, conv_integer, conv_decimal)
-            res4_bn2_out   = F.batch_norm(res4_conv2_out,res4_bn2_running_mean,res4_bn2_running_var,weight=res4_bn2_weight,bias=res4_bn2_bias)
+            # res4_conv2_out = feature_convert(res4_conv2_out, conv_integer, conv_decimal)
+            # res4_bn2_out   = F.batch_norm(res4_conv2_out,res4_bn2_running_mean,res4_bn2_running_var,weight=res4_bn2_weight,bias=res4_bn2_bias)
 
-            res4_out = res3_out + res4_bn2_out
-            res4_out = feature_convert(res4_out, bn_integer, bn_decimal)
+            res4_out = res3_out + res4_conv2_out
+            res4_out = feature_convert(res4_out, conv_integer, conv_decimal)
 
             # max_bn = calculate_max(res4_out,max_bn)
 
             res5_conv1_out = F.conv2d(res4_out,res5_conv1_weight,bias=res5_conv1_bias,padding=1)
-            res5_conv1_out = feature_convert(res5_conv1_out, conv_integer, conv_decimal)
-            res5_bn1_out   = F.batch_norm(res5_conv1_out,res5_bn1_running_mean,res5_bn1_running_var,weight=res5_bn1_weight,bias=res5_bn1_bias)
-            relu_res5      = F.relu(res5_bn1_out)
-            relu_res5 = feature_convert(relu_res5, bn_integer, bn_decimal)
+            # res5_conv1_out = feature_convert(res5_conv1_out, conv_integer, conv_decimal)
+            # res5_bn1_out   = F.batch_norm(res5_conv1_out,res5_bn1_running_mean,res5_bn1_running_var,weight=res5_bn1_weight,bias=res5_bn1_bias)
+            relu_res5      = F.relu(res5_conv1_out)
+            relu_res5 = feature_convert(relu_res5, conv_integer, conv_decimal)
             # max_bn = calculate_max(relu_res5,max_bn)
             res5_conv2_out = F.conv2d(relu_res5,res5_conv2_weight,bias=res5_conv2_bias,padding=1)
-            res5_conv2_out = feature_convert(res5_conv2_out, conv_integer, conv_decimal)
-            res5_bn2_out   = F.batch_norm(res5_conv2_out,res5_bn2_running_mean,res5_bn2_running_var,weight=res5_bn2_weight,bias=res5_bn2_bias)
+            # res5_conv2_out = feature_convert(res5_conv2_out, conv_integer, conv_decimal)
+            # res5_bn2_out   = F.batch_norm(res5_conv2_out,res5_bn2_running_mean,res5_bn2_running_var,weight=res5_bn2_weight,bias=res5_bn2_bias)
 
-            res5_out = res4_out + res5_bn2_out
-            res5_out = feature_convert(res5_out, bn_integer, bn_decimal)
+            res5_out = res4_out + res5_conv2_out
+            res5_out = feature_convert(res5_out, conv_integer, conv_decimal)
 
             # max_bn = calculate_max(res5_out,max_bn)
 
             conv4_out = F.conv_transpose2d(res5_out,conv4_weight,bias=conv4_bias,padding=1,output_padding=1,stride=2)
-            conv4_out = feature_convert(conv4_out, conv_integer, conv_decimal)
-            bn4_out = F.batch_norm(conv4_out,bn4_running_mean,bn4_running_var,weight=bn4_weight,bias=bn4_bias)
-            relu_4 = F.relu(bn4_out)
-            relu_4 = feature_convert(relu_4, bn_integer, bn_decimal)
+            # conv4_out = feature_convert(conv4_out, conv_integer, conv_decimal)
+            # bn4_out = F.batch_norm(conv4_out,bn4_running_mean,bn4_running_var,weight=bn4_weight,bias=bn4_bias)
+            relu_4 = F.relu(conv4_out)
+            relu_4 = feature_convert(relu_4, conv_integer, conv_decimal)
 
             # max_bn = calculate_max(relu_4,max_bn)
 
             conv5_out = F.conv_transpose2d(relu_4,conv5_weight,bias=conv5_bias,padding=2,output_padding=1,stride=2)
-            conv5_out = feature_convert(conv5_out, conv_integer, conv_decimal)
-            bn5_out = F.batch_norm(conv5_out,bn5_running_mean,bn5_running_var,weight=bn5_weight,bias=bn5_bias)
-            relu_5 = F.relu(bn5_out)
-            relu_5 = feature_convert(relu_5, bn_integer, bn_decimal)
+            # conv5_out = feature_convert(conv5_out, conv_integer, conv_decimal)
+            # bn5_out = F.batch_norm(conv5_out,bn5_running_mean,bn5_running_var,weight=bn5_weight,bias=bn5_bias)
+            relu_5 = F.relu(conv5_out)
+            relu_5 = feature_convert(relu_5, conv_integer, conv_decimal)
 
             # max_bn = calculate_max(relu_5,max_bn)
 
