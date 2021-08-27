@@ -127,11 +127,11 @@ if __name__ == '__main__':
         x_integer = 0
         x_decimal = 6
         conv_integer = 4
-        conv_decimal = 4
+        conv_decimal = 100
         # bn_integer = 4
         # bn_decimal = 100
         out_integer = 1
-        out_decimal = 100
+        out_decimal = 3
 
 
 
@@ -512,18 +512,21 @@ if __name__ == '__main__':
         max_bn = 0
         for idx, (x, y, didx, rot, zoom) in enumerate(test_data):
             print("idx = ",idx)
-            # if(idx==1): break
+            if(idx==1): break
             x = x.numpy()
             if(np.amax(x)>=max):
                 max = np.amax(x)
             # x = torch.from_numpy(x) 
             x = param_convert(x, x_decimal)
+            print("input size = ",x.size())
             conv1_out = F.conv2d(x,conv1_weight,bias=conv1_bias,padding=4)
             # conv1_out = feature_convert(conv1_out, conv_integer, conv_decimal)
             # bn1_out = F.batch_norm(conv1_out, bn1_running_mean, bn1_running_var, weight=bn1_weight, bias=bn1_bias)
             
             relu_1 = F.relu(conv1_out)
             relu_1 = feature_convert(relu_1, conv_integer, conv_decimal)
+            
+            print("conv1 output size = ",relu_1.size())
 
             # max_bn = calculate_max(relu_1,max_bn)
 
@@ -533,6 +536,8 @@ if __name__ == '__main__':
             relu_2 = F.relu(conv2_out)
             relu_2 = feature_convert(relu_2, conv_integer, conv_decimal)
 
+            print("conv2 output size = ",relu_2.size())
+
             # max_bn = calculate_max(relu_2,max_bn)
 
             conv3_out = F.conv2d(relu_2,conv3_weight,bias=conv3_bias,padding=1,stride=2)
@@ -541,6 +546,8 @@ if __name__ == '__main__':
             relu_3 = F.relu(conv3_out)
             relu_3 = feature_convert(relu_3, conv_integer, conv_decimal)
 
+            print("conv3 output size = ",relu_3.size())
+
             # max_bn = calculate_max(relu_3,max_bn)
 
             res1_conv1_out = F.conv2d(relu_3,res1_conv1_weight,bias=res1_conv1_bias,padding=1)
@@ -548,6 +555,7 @@ if __name__ == '__main__':
             # res1_bn1_out   = F.batch_norm(res1_conv1_out,res1_bn1_running_mean,res1_bn1_running_var,weight=res1_bn1_weight,bias=res1_bn1_bias)
             relu_res1      = F.relu(res1_conv1_out)
             relu_res1 = feature_convert(relu_res1, conv_integer, conv_decimal)
+            print("res_conv1 output size = ",relu_res1.size())
             # max_bn = calculate_max(relu_res1,max_bn)
             res1_conv2_out = F.conv2d(relu_res1,res1_conv2_weight,bias=res1_conv2_bias,padding=1)
             # res1_conv2_out = feature_convert(res1_conv2_out, conv_integer, conv_decimal)
@@ -556,6 +564,8 @@ if __name__ == '__main__':
             res1_out = relu_3 + res1_conv2_out
 
             res1_out = feature_convert(res1_out, conv_integer, conv_decimal)
+
+            print("res output size = ",res1_out.size())
 
             # max_bn = calculate_max(res1_out,max_bn)
 
@@ -625,7 +635,9 @@ if __name__ == '__main__':
             relu_4 = F.relu(conv4_out)
             relu_4 = feature_convert(relu_4, conv_integer, conv_decimal)
 
-            # print(relu_4.size())
+            print("conv4 output size = ",relu_4.size())
+
+            print(relu_4.size())
 
             # max_bn = calculate_max(relu_4,max_bn)
 
@@ -635,13 +647,14 @@ if __name__ == '__main__':
             relu_5 = F.relu(conv5_out)
             relu_5 = feature_convert(relu_5, conv_integer, conv_decimal)
 
+            print("conv5 output size = ",relu_5.size())
+
             # max_bn = calculate_max(relu_5,max_bn)
-            # print(relu_5.size())
 
             conv6_out = F.conv_transpose2d(relu_5,conv6_weight,bias=conv6_bias,padding=4,stride=1)
             conv6_out = feature_convert(conv6_out, conv_integer, conv_decimal)
 
-            # print(conv6_out.size())
+            print("conv6 output size = ",conv6_out.size())
 
             pos_out = F.conv2d(conv6_out,pos_weight,bias=pos_bias)
             pos_out = feature_convert(pos_out, out_integer, out_decimal)
@@ -651,6 +664,8 @@ if __name__ == '__main__':
             sin_out = feature_convert(sin_out, out_integer, out_decimal)
             width_out = F.conv2d(conv6_out,width_weight,bias=width_bias)
             width_out = feature_convert(width_out, out_integer, out_decimal)
+
+            print("ouput size = ",sin_out.size())
 
             loss_fix = loss(pos_out,cos_out,sin_out,width_out,y)
 
