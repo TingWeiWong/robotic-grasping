@@ -27,9 +27,9 @@ if __name__ == '__main__':
 	conv1_weight = model_dict['conv1.weight'].numpy()
 	# print ("conv1_weight = ",conv1_weight)
 	test_data = numpy.array([[1,2,3],
-							[4,5,6]],dtype=numpy.uint8)
+							 [4,5,6]],dtype=numpy.uint8)
 
 	with open("test.mif","w") as write_file:
-		result = mif.dump(test_data,write_file)
+		result = mif.dumps(test_data,write_file)
 		print ("Result = ",result)
 
