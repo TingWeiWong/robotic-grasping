@@ -34,7 +34,7 @@ def mif_weight_convert(weight_matrix, bitwidth):
 	# bin_weight = bin_weight.type(torch.FloatTensor)
 
 
-	return numpy_bin_weight
+	return quantized_weight
 
 def param_convert(x, a):
 	y = Fxp(x, signed=True, n_word=a+1, n_frac=a, overflow='saturate', rounding='around')
